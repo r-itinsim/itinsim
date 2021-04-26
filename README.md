@@ -8,17 +8,13 @@ The goal of itinsim is to provide a set of tools for simulating IT infrastructur
 
 ## Acknowledgements
 
-This project is built on top of [simmer]() simulation framework. It utilizes all the features of `simmer` and 
+This project is built on top of [simmer](https://github.com/r-simmer/simmer) simulation framework and is alive thanks to it :)
 
 ## Installation
-
-You can install the released version of itinsim from [CRAN](https://CRAN.R-project.org) with:
 
 To be added ...
 
 ## Example
-
-This is a basic example which shows you how to solve a common problem:
 
 To be added ...
 
