@@ -17,6 +17,7 @@ is_simmer <- function(x) {
 #' @inheritParams is_simmer
 #'
 #' @return same object as was provided
+#' @importFrom gendatypes throw_exception
 #' @export
 validate_simmer <- function(x)
 {
@@ -34,6 +35,8 @@ validate_simmer <- function(x)
 #' @param assertedName Expected name of simmer object
 #'
 #' @return TRUE or FALSE
+#' @importFrom gendatypes throw_exception
+#' @importFrom utils hasName
 #' @export
 validate_simmer_with_name <- function(x, assertedName) {
   validate_simmer(x)

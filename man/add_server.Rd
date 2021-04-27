@@ -11,12 +11,6 @@ add_server(.env, ...)
 
 \item{...}{other resource parameters}
 }
-\value{
-
-}
 \description{
 Add server
-}
-\seealso{
-\code{\link{simmer::add_resource}}
 }

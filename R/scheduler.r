@@ -4,6 +4,8 @@
 #' @param ... Add resource parameters from simmer
 #'
 #' @return Simulation environment with resource named "Scheduler"
+#' @importFrom magrittr %>%
+#' @importFrom simmer add_resource
 #' @export
 add_scheduler <- function(.env, ...)
 {

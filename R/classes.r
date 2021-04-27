@@ -6,6 +6,7 @@ iti_classes.host <- "Host"
 iti_classes.vm <- "VM"
 iti_classes.server <- "Server"
 
+#' Common constants for IT infrastructure entities
 #' @export
 iti_entities <- gendatypes::c_extended(
   iti_classes.infrastructure,
@@ -24,6 +25,7 @@ request_classes.icmp <- "icmp"
 request_classes.tcp_ip <- "tcp/ip"
 request_classes.rpc <- "rpc"
 
+#' Common constants for IT infrastructure entities
 #' @export
 iti_requests <- gendatypes::c_extended(
   request_classes.http,

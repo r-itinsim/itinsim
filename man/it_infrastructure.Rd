@@ -6,6 +6,9 @@
 \usage{
 it_infrastructure(...)
 }
+\arguments{
+\item{...}{Parameters for simulation environment from simmer}
+}
 \value{
 simmer environment with the name "IT-infrastructure"
 }

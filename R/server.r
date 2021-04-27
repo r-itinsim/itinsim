@@ -2,9 +2,9 @@
 #'
 #' @param .env simulation environment
 #' @param ... other resource parameters
-#' @seealso \code{\link{simmer::add_resource}}
 #'
-#' @return
+#' @importFrom simmer add_resource
+#' @importFrom magrittr %>%
 #' @export
 add_server <- function(.env, ...)
 {
@@ -19,6 +19,8 @@ add_server <- function(.env, ...)
 #' @param .servers server configurations
 #'
 #' @return environment with added server resources
+#' @importFrom simmer add_resource
+#' @importFrom magrittr %>%
 #' @export
 add_servers <- function(.env, .servers)
 {
