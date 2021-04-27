@@ -1,6 +1,6 @@
 # IT infrastructure classes -----------------------------------------------
 
-iti_classes.infrastructure <- "IT-infrastructure"
+iti_classes.infrastructure <- "IT infrastructure"
 iti_classes.scheduler <- "Scheduler"
 iti_classes.host <- "Host"
 iti_classes.vm <- "VM"
