@@ -16,4 +16,7 @@ RoxygenNote: 7.1.1.9000
 Imports: 
     magrittr,
     simmer,
-    gendatypes
+    gendatypes,
+    purrr,
+    rlang,
+    dplyr
