@@ -78,3 +78,103 @@ enrich_get_mon.policy_simulation_result <- function(envs, get_mon_function) {
     dplyr::bind_rows() %>%
     dplyr::mutate(replication = get_policy_index(.data$policy))
 }
+
+
+# Masking simmer resources methods ----------------------------------------
+
+
+#' Mask resources in simmer environment
+#'
+#' @param .envs simulation environments
+#' @param values Vector of resource names to mask
+#' @param mask Expected mask name
+#'
+#' @return Cloned environment with masked resources
+#' @export
+mask_resources <- function(.envs, values, mask) {
+  UseMethod("mask_resources", unlist(list(.envs))[[1]])
+}
+
+#' Mask resources in simmer environment
+#'
+#' @inheritParams mask_resources
+#'
+#' @inherit mask_resources return
+#' @export
+mask_resources.simmer <- function(.envs, values, mask) {
+  .envs %>%
+    lapply(function(env) env %>% simmer::wrap()) %>%
+    mask_resources(values, mask)
+}
+
+#' Mask resources in simmer environment
+#'
+#' @inheritParams mask_resources
+#'
+#' @inherit mask_resources return
+#' @export
+mask_resources.wrap <- function(.envs, values, mask) {
+  .envs %>% lapply(function(env) mask_wrap_resources(env, values, mask))
+}
+
+#' @keywords internal
+mask_wrap_resources <- function(.env, values, mask) {
+  if (!methods::is(.env, "wrap"))
+    gendatypes::throw_exception(.env, "Provided object is not of class 'wrap'")
+
+  env <- .env %>%
+    validate_simmer() %>%
+    rlang::env_clone() %>%
+    structure(class = class(.env), cloned = TRUE)
+
+  env %>%
+    mask_resource_in_mon_arrivals_res(values, mask) %>%
+    mask_resources_in_mon_resources(values, mask)
+}
+
+#' @keywords internal
+mask_resource_in_mon_arrivals_res <- function(.env, values, mask)
+{
+  if (!(attr(.env, "cloned") %??% FALSE))
+    gendatypes::throw_exception(.env, "Environment should be cloned!")
+
+  .env$mon_arrivals_res %<>%
+    dplyr::mutate(resource = ifelse(.data$resource %in% values, mask, .data$resource))
+
+  .env
+}
+
+#' @keywords internal
+mask_resources_in_mon_resources <- function(.env, values, mask)
+{
+  if (!attr(.env, "cloned")) gendatypes::throw_exception(.env, "Environment should be cloned!")
+
+  mutate_if_in_list <- function(data, column, true, .false = NULL)
+  {
+    data %>%
+      dplyr::mutate("{{column}}" := ifelse(
+        .data$resource %in% values, !!rlang::enexpr(true), .false %??% {{column}}))
+  }
+
+  env <- structure(rlang::env_clone(.env), class = class(.env))
+
+  total <- simmer::get_mon_resources(.env) %>%
+    dplyr::filter(.data$resource %in% values) %>%
+    dplyr::distinct(.data$resource, .data$capacity, .data$queue_size) %>%
+    dplyr::summarise(capacity = sum(.data$capacity), queue_size = sum(.data$queue_size))
+
+  env$mon_resources %<>%
+    dplyr::group_by(.data$resource) %>%
+    mutate_if_in_list(.data$server_changed_by, diff(c(0,.data$server)), 0) %>%
+    mutate_if_in_list(.data$queue_changed_by, diff(c(0,.data$queue)), 0) %>%
+    dplyr::ungroup() %>%
+    mutate_if_in_list(.data$server, cumsum(.data$server_changed_by)) %>%
+    mutate_if_in_list(.data$queue, cumsum(.data$queue_changed_by)) %>%
+    dplyr::select(-.data$server_changed_by, -.data$queue_changed_by) %>%
+    mutate_if_in_list(.data$capacity, total$capacity) %>%
+    mutate_if_in_list(.data$queue_size, total$queue_size) %>%
+    mutate_if_in_list(.data$system, .data$server + .data$queue) %>%
+    mutate_if_in_list(.data$resource, mask)
+
+  env
+}

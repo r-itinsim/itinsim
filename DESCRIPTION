@@ -20,6 +20,7 @@ Imports:
     dplyr,
     furrr,
     progressr,
-    methods
+    methods,
+    lubridate
 Depends: 
     simmer
