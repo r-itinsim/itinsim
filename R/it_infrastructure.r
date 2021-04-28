@@ -3,7 +3,6 @@
 #' @param ... Parameters for simulation environment from simmer
 #'
 #' @return simmer environment with the name "IT-infrastructure"
-#' @importFrom simmer simmer
 #' @export
 it_infrastructure <- function(...) {
   simmer::simmer(iti_entities$`IT infrastructure`, ...)
@@ -14,7 +13,6 @@ it_infrastructure <- function(...) {
 #' @param x object to test
 #'
 #' @return TRUE or FALSE
-#' @importFrom utils hasName
 #' @export
 is_it_infrastructure <- function(x) {
   (is_simmer(x) && hasName(x, "name") && x$name == iti_entities$`IT infrastructure`)

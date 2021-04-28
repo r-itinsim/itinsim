@@ -1,12 +1,11 @@
 Package: itinsim
-Title: What the Package Does (One Line, Title Case)
+Title: Framework for IT infrastructure simulations
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Valerii",
+           family = "Kolesnik",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+           email = "mypowerismind@gmail.com")
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -15,8 +14,12 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1.9000
 Imports: 
     magrittr,
-    simmer,
     gendatypes,
     purrr,
     rlang,
-    dplyr
+    dplyr,
+    furrr,
+    progressr,
+    methods
+Depends: 
+    simmer
