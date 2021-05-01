@@ -178,3 +178,16 @@ mask_resources_in_mon_resources <- function(.env, values, mask)
 
   env
 }
+
+
+#' Simmer extensions
+#'
+#' Check whether object of class 'trajectory'
+#'
+#' @param x object to test
+#'
+#' @return TRUE or FALSE
+#' @export
+is_trajectory <- function(x) {
+  is(x, "trajectory")
+}
