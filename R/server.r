@@ -22,12 +22,10 @@ add_servers <- function(.env, .servers)
 {
   validate_it_infrastructure(.env)
 
-  for (server in .servers)
-  {
-    .env %>% simmer::add_resource(name = server$name,
-                                  capacity = server$capacity,
-                                  queue_size = server$queue_size,
-                                  preemptive = server$preemptive)
+  add_resource_dynamic <- function(env, args) {
+    args$.env <- env
+    do.call(simmer::add_resource, args)
   }
-  .env
+
+  .servers %>% Reduce(f = add_resource_dynamic, init = .env)
 }

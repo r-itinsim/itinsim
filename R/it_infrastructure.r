@@ -1,6 +1,6 @@
 #' Create IT infrastructure simulation environment
 #'
-#' @param ... Parameters for simulation environment from simmer
+#' @inheritDotParams simmer::simmer
 #'
 #' @return simmer environment with the name "IT-infrastructure"
 #' @export
