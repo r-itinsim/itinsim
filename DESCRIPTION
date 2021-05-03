@@ -22,6 +22,7 @@ Imports:
     furrr,
     progressr,
     methods,
-    lubridate
+    lubridate,
+    tidyr
 Depends: 
     simmer

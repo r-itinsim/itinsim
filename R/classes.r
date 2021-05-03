@@ -1,3 +1,18 @@
+# Metadata classes --------------------------------------------------------
+
+iti_meta.arrivals <- "iti_arrivals"
+iti_meta.resources <- "iti_resources"
+iti_meta.attributes <- "iti_attributes"
+
+#' Common metadata constants of IT infrastructure simulation framework
+#' @export
+iti_metadata <- gendatypes::c_extended(
+  iti_meta.arrivals,
+  iti_meta.resources,
+  iti_meta.attributes,
+  as.list = TRUE
+)
+
 # IT infrastructure classes -----------------------------------------------
 
 iti_classes.infrastructure <- "IT infrastructure"

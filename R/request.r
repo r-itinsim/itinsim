@@ -104,7 +104,7 @@ change_timeout_for <- function(.trj, resource, handle_function)
 #'
 #' @export
 handle_request_with_scheduler <- function(.trj, ...) {
-  .trj %>% handle_request_with(resource = iti_entities$scheduler, ...)
+  .trj %>% handle_request_with(resource = iti_entities$Scheduler, ...)
 }
 
 #' Handle method for request trajectory
@@ -116,7 +116,7 @@ handle_request_with_scheduler <- function(.trj, ...) {
 #'
 #' @export
 handle_request_with_server <- function(.trj, ...) {
-  .trj %>% handle_request_with(resource = iti_entities$server, ...)
+  .trj %>% handle_request_with(resource = iti_entities$Server, ...)
 }
 
 #' Change timeout handle time for resource
@@ -129,7 +129,7 @@ handle_request_with_server <- function(.trj, ...) {
 #' @export
 change_server_processing_time <- function(.trj, ...)
 {
-  .trj %>% change_timeout_for(resource = iti_entities$server, ...)
+  .trj %>% change_timeout_for(resource = iti_entities$Server, ...)
 }
 
 
@@ -143,7 +143,7 @@ change_server_processing_time <- function(.trj, ...)
 #' @export
 change_scheduler_handle_time <- function(.trj, ...)
 {
-  .trj %>% change_timeout_for(resource = iti_entities$scheduler, ...)
+  .trj %>% change_timeout_for(resource = iti_entities$Scheduler, ...)
 }
 
 
