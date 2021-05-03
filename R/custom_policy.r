@@ -10,7 +10,7 @@
 #' @export
 new_custom_policy <- function(name = character(), resources = character(), env = NA,
                               select_function = get_simmer_policy_resources, initial_container = list()) {
-  policy <- new_policy(name, resources, env = env, class = "custom_policy", initial_container = initial_container)
+  policy <- new_policy(name, resources, env = env, class = "custom_policy", initial_container = initial_container, is_simmer_policy = FALSE)
   policy$select_function <- adapt_policy_selection_function(select_function, policy)
   policy
 }

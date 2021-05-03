@@ -9,7 +9,8 @@ new_policy(
   resources = character(),
   ...,
   class = character(),
-  initial_container = list()
+  initial_container = list(),
+  is_simmer_policy = TRUE
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ new_policy(
 \item{class}{custom class name, used for extensions}
 
 \item{initial_container}{container of items from which policy object is going to be created}
+
+\item{is_simmer_policy}{defines whether wrapper should hold simmer policy in order to match policy name or no}
 }
 \value{
 new policy object wrapper

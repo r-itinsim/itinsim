@@ -7,7 +7,15 @@
 it_infrastructure(...)
 }
 \arguments{
-\item{...}{Parameters for simulation environment from simmer}
+\item{...}{
+  Arguments passed on to \code{\link[simmer:simmer]{simmer::simmer}}
+  \describe{
+    \item{\code{name}}{the name of the simulator.}
+    \item{\code{verbose}}{enable showing activity information.}
+    \item{\code{mon}}{monitor (in memory by default); see \code{\link[simmer]{monitor}} for
+other options.}
+    \item{\code{log_level}}{debugging level (see \code{\link[simmer]{log_}}).}
+  }}
 }
 \value{
 simmer environment with the name "IT-infrastructure"

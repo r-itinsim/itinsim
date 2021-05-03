@@ -5,11 +5,16 @@
 #' @param ... additional arguments
 #' @param class custom class name, used for extensions
 #' @param initial_container container of items from which policy object is going to be created
+#' @param is_simmer_policy defines whether wrapper should hold simmer policy in order to match policy name or no
 #'
 #' @return new policy object wrapper
 #' @export
-new_policy <- function(name = character(), resources = character(), ..., class = character(), initial_container = list())
+new_policy <- function(name = character(), resources = character(), ..., class = character(), initial_container = list(),
+                       is_simmer_policy = TRUE)
 {
+  if (is_simmer_policy)
+    simmer_policy_name_match(name)
+
   dots = list(...)
 
   initial_container[names(dots)] <- dots
