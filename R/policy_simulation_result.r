@@ -1,13 +1,30 @@
 class_names.policy_simulation_result <- "policy_simulation_result"
 
+#' Pack policy simulation result into single environment if it is in list
+#'
+#' @param x list with simulation environment and policy name
+#'
+#' @return environment with policy name
+#' @export
+pack_policy_simulation_result <- function(x) {
+  validate_policy_simulation_result(x)
+
+  if (is(x, "list")) {
+    x$sim$policy <- x$policy
+    x$sim$sim <- x$sim
+    x <- x$sim
+  }
+
+  x
+}
+
 #' Convert object to policy_simulation_result
 #'
 #' @param x Object to convert
 #'
 #' @return New 'policy_simulation_result' object
 #' @export
-as.policy_simulation_result <- function(x)
-{
+as.policy_simulation_result <- function(x) {
   validate_policy_simulation_result(x) %>%
     gendatypes::with_class(class_names.policy_simulation_result)
 }
