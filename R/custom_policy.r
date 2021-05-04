@@ -62,3 +62,26 @@ adapt_policy_selection_function <- function(select_function, policy) {
       function() purrr::lift_dl(select_function)(policy[arguments])
     }
 }
+
+#' Wrap string or function to a policy object
+#'
+#' @param ... either default simmer policy name, like "shortest-queue", "random", etc. or custom function which returns resources to select
+#'
+#' @return a list of policy objects
+#' @export
+wrap_policy <- function(...)
+{
+  dots <- unlist(list(...))
+  indexes <- seq_along(dots)
+  dots_names <- names(dots) %??% lapply(indexes, function(x) "")
+
+  lapply(indexes, function(index)
+  {
+    selector <- ifelse(nzchar(dots_names[index]), dots_names[index], index)
+
+    switch(class(value <- dots[[selector]]),
+           "function" = new_custom_policy(name = selector, select_function = value),
+           "character" = new_policy(name = value),
+           stop(paste("unknown type of the policy:", value, "with selector:", selector)))
+  })
+}
