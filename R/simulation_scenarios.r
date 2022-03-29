@@ -10,7 +10,7 @@ repeat_policy_scenario <- function(policies, scenario, sim_config)
 {
   validate_policy_scenario(scenario)
 
-  f_opts <- furrr::furrr_options(seed = 73, globals = names(globalenv()))
+  f_opts <- furrr::furrr_options(seed = 73)
   p <- progressr::progressor(steps = length(policies) * 2)
 
   sim_results <- furrr::future_map(policies, function(policy)

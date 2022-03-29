@@ -77,7 +77,6 @@ is_policy_simulation_result <- function(x)
 #' @export
 get_mon_resources.policy_simulation_result <- function(.envs) {
   enrich_get_mon(.envs, simmer::get_mon_resources) %>%
-    dplyr::arrange(rlang::.data$resource, rlang::.data$time) %>%
     gendatypes::with_class(iti_metadata$iti_resources)
 }
 
@@ -92,7 +91,6 @@ get_mon_resources.policy_simulation_result <- function(.envs) {
 #' @export
 get_mon_arrivals.policy_simulation_result <- function(.envs, per_resource = FALSE, ongoing = FALSE) {
   enrich_get_mon(.envs, function(env) env %>% simmer::get_mon_arrivals(per_resource, ongoing)) %>%
-    dplyr::arrange(rlang::.data$name) %>%
     gendatypes::with_class(iti_metadata$iti_arrivals)
 }
 

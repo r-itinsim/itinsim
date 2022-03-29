@@ -1,6 +1,6 @@
 Package: itinsim
 Title: Framework for IT infrastructure simulations
-Version: 0.0.0.9000
+Version: 0.0.1.0001
 Authors@R: 
     person(given = "Valerii",
            family = "Kolesnik",
