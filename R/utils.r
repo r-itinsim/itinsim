@@ -9,7 +9,7 @@ prepare_args_from_caller <- function(func, args) {
   func_args <- formals(func)
 
   if (!rlang::is_empty(not_mapped_args_names <- dplyr::setdiff(names(args), names(func_args)))) {
-    warning(paste("Some arguments are unknown for", deparse(substitute(func)),
+    warning(paste("Some arguments are unknown for", paste(trimws(deparse(substitute(func))), collapse = ""),
                   "and will be skipped:", not_mapped_args_names,
                   "\n  Use arguments: ", paste(names(func_args), collapse = ", ")))
   }
