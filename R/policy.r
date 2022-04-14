@@ -12,6 +12,8 @@
 new_policy <- function(name = character(), resources = character(), ..., class = character(), initial_container = list(),
                        is_simmer_policy = TRUE)
 {
+  validate_policy_name(name)
+
   if (is_simmer_policy)
     simmer_policy_name_match(name)
 
@@ -122,4 +124,20 @@ simmer_policy_name_match <- function(policyName = c("shortest-queue", "shortest-
                                                 "round-robin", "round-robin-available", "first-available",
                                                 "random", "random-available")) {
   match.arg(policyName)
+}
+
+
+#' Validate text which is going to be used for naming policy
+#'
+#' @param x input text
+#'
+#' @return input text if it is validated
+#' @keywords internal
+#' @export
+validate_policy_name <- function(x)
+{
+  if (!is.character(x) || !nzchar(x) || rlang::is_empty(x))
+    stop(paste("policy name must be of non-zero and non-empty character type! Provided value:", x, sep = " "))
+
+  x
 }
