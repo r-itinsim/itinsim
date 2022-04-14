@@ -41,8 +41,8 @@ validate_policy_simulation_result <- function(x) {
   if (!utils::hasName(x, "policy"))
     stop("`policy_simulation_result` must have `policy` property!")
 
-  if (!is.character(x$policy) || !nzchar(x$policy) || rlang::is_empty(x$policy))
-    stop("`policy` must be of non-zero and non-empty character type!")
+  if (!is_policy(x$policy))
+    stop("`policy` is not of type: policy")
 
   if (!is.environment(x$sim))
     stop("`sim` must be of type: environment")
