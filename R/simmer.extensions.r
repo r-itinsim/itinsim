@@ -61,10 +61,11 @@ enrich_get_mon <- function(envs, get_mon_function) {
 #'
 #' @inherit enrich_get_mon return
 #' @importFrom rlang .data
+#' @importFrom gendatypes %$$%
 #' @export
 enrich_get_mon.policy_simulation_result <- function(envs, get_mon_function) {
-  policies <- if (gendatypes::is_typed_list(envs)) envs$policy else sapply(envs, function(x) x$policy)
-  get_policy_index <- Vectorize(function(x) which(x == policies))
+  policies <- if (gendatypes::is_typed_list(envs)) envs%$$%policy else sapply(envs, function(x) x$policy)
+  get_policy_index_by_name <- Vectorize(function(x) which(x == policies$name))
 
   envs %>%
     lapply(function(item) {
@@ -73,10 +74,10 @@ enrich_get_mon.policy_simulation_result <- function(envs, get_mon_function) {
         rlang::env_clone() %>%
         structure(class = dplyr::intersect(c("simmer", "wrap"), class(item))) %>%
         get_mon_function() %>%
-        dplyr::mutate(policy = item$policy)
+        dplyr::mutate(policy = item$policy$name)
     }) %>%
     dplyr::bind_rows() %>%
-    dplyr::mutate(replication = get_policy_index(.data$policy))
+    dplyr::mutate(replication = get_policy_index_by_name(.data$policy))
 }
 
 
@@ -114,7 +115,16 @@ mask_resources.simmer <- function(.envs, values, mask) {
 #' @inherit mask_resources return
 #' @export
 mask_resources.wrap <- function(.envs, values, mask) {
-  .envs %>% lapply(function(env) mask_wrap_resources(env, values, mask))
+  .envs %>%
+    lapply(function(env) mask_wrap_resources(env, values, mask)) %>%
+    gendatypes::as.typed_list()
+}
+
+get_mon_resources_as_simmer <- function(.env)
+{
+  .env %>%
+    rlang::env_clone() %>%
+    structure(class = dplyr::intersect(c("simmer", "wrap"), class()))
 }
 
 #' @keywords internal
@@ -158,7 +168,10 @@ mask_resources_in_mon_resources <- function(.env, values, mask)
 
   env <- structure(rlang::env_clone(.env), class = class(.env))
 
-  total <- simmer::get_mon_resources(.env) %>%
+  total <- env %>%
+    rlang::env_clone() %>%
+    structure(class = dplyr::intersect(c("simmer", "wrap"), class(env))) %>%
+    simmer::get_mon_resources() %>%
     dplyr::filter(.data$resource %in% values) %>%
     dplyr::distinct(.data$resource, .data$capacity, .data$queue_size) %>%
     dplyr::summarise(capacity = sum(.data$capacity), queue_size = sum(.data$queue_size))

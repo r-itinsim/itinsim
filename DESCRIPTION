@@ -1,6 +1,6 @@
 Package: itinsim
 Title: Framework for IT infrastructure simulations
-Version: 0.0.1.2
+Version: 0.0.1.3
 Authors@R: 
     person(given = "Valerii",
            family = "Kolesnik",
@@ -11,7 +11,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1.9000
+RoxygenNote: 7.1.2
 Imports: 
     magrittr,
     gendatypes,
