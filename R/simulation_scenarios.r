@@ -16,10 +16,12 @@ repeat_policy_scenario <- function(policies, scenario, sim_config)
   sim_results <- furrr::future_map(policies, function(policy)
   {
     p(message = paste("Start simulation for:", policy$name))
-    result <- scenario(policy, sim_config)
+    sim_result <- scenario(policy, sim_config)
     p(message = paste("End simulation for:", policy$name))
 
-    result %>% pack_policy_simulation_result() %>% as.policy_simulation_result()
+    list(sim = sim_result, policy = policy) %>%
+      pack_policy_simulation_result() %>%
+      as.policy_simulation_result()
   },
   .options = f_opts)
 
