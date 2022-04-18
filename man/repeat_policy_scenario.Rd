@@ -14,7 +14,7 @@ repeat_policy_scenario(policies, scenario, sim_config)
 \item{sim_config}{Simulation config}
 }
 \value{
-A list of policty_simulation_results
+A list of \code{policy_simulation_results} type
 }
 \description{
 Repeat same simulation with different resource-selection policies

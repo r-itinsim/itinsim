@@ -4,7 +4,7 @@
 #' @param scenario Scenario to evaluate
 #' @param sim_config Simulation config
 #'
-#' @return A list of policty_simulation_results
+#' @return A list of `policy_simulation_results` type
 #' @export
 repeat_policy_scenario <- function(policies, scenario, sim_config)
 {
