@@ -6,7 +6,7 @@
 #'
 #' @return New object of 'simulation_config'
 #' @export
-new_simulation_config <- function(tasks = numeric(), until = double(), units = "second") {
+new_simulation_config <- function(tasks = numeric(), until = double(), units = "seconds") {
   stopifnot(is.numeric(tasks))
 
   if (!rlang::is_empty(tasks) & rlang::is_empty(until))

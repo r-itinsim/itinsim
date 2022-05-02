@@ -25,7 +25,8 @@ repeat_policy_scenario <- function(policies, scenario, sim_config)
   },
   .options = f_opts)
 
-  gendatypes::as.typed_list(sim_results, class_names.policy_simulation_result)
+  sim_results %>%
+    gendatypes::as.typed_list(class_names.policy_simulation_result)
 }
 
 #' Validate policy scenario function
