@@ -4,7 +4,7 @@
 \alias{new_simulation_config}
 \title{Simulation config constructor}
 \usage{
-new_simulation_config(tasks = numeric(), until = double(), units = "second")
+new_simulation_config(tasks = numeric(), until = double(), units = "seconds")
 }
 \arguments{
 \item{tasks}{Number of tasks to produce}
