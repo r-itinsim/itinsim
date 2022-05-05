@@ -50,3 +50,14 @@ iti_requests <- gendatypes::c_extended(
   request_classes.rpc,
   as.list = TRUE
 )
+
+# Config classes ----------------------------------------------------------
+
+config_classes.server <- "server_config"
+config_classes.scheduler <- "scheduler_config"
+
+iti_configs <- gendatypes::c_extended(
+  config_classes.server,
+  config_classes.scheduler,
+  as.list = TRUE
+)

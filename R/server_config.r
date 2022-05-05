@@ -20,6 +20,5 @@ create_servers_configs <- function(n = numeric(), ..., name_template = "Server-%
 #' @return 'server config' object
 #' @export
 new_server_config <- function(..., prepared_args = list()) {
-  args <- if (rlang::is_empty(prepared_args)) list(...) else prepared_args
-  purrr::lift_dl(new_resource_config, class = "server_config")(args)
+  generate_resource_config(..., prepared_args = prepared_args, class_name = iti_configs$server_config)
 }
