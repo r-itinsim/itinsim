@@ -2,13 +2,15 @@
 #'
 #' @param .env simulation environment
 #' @param ... other resource parameters
+#' @param .config server config object which will be used as primary source of parameters for the resource
 #'
 #' @export
-add_server <- function(.env, ...)
+add_server <- function(.env, ..., .config)
 {
-  .env %>%
-    validate_it_infrastructure() %>%
-    simmer::add_resource(name = iti_entities$Server, ...)
+  if (missing(.config) || rlang::is_empty(.config))
+    .config <- new_server_config(prepared_args = list(...))
+
+  .env %>% add_iti_resource_entity(.config = .config)
 }
 
 #' Add a list of servers to IT infrastructure

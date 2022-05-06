@@ -20,5 +20,7 @@ create_servers_configs <- function(n = numeric(), ..., name_template = "Server-%
 #' @return 'server config' object
 #' @export
 new_server_config <- function(..., prepared_args = list()) {
-  generate_resource_config(..., prepared_args = prepared_args, class_name = iti_configs$server_config)
+  config <- generate_resource_config(..., prepared_args = prepared_args, class_name = iti_configs$server_config)
+  if (!hasName(config, "name")) config$name <- iti_entities$Server
+  config
 }

@@ -5,9 +5,10 @@
 #'
 #' @return Simulation environment with resource named "Scheduler"
 #' @export
-add_scheduler <- function(.env, ...)
+add_scheduler <- function(.env, ..., .config)
 {
-  .env %>%
-    validate_it_infrastructure() %>%
-    simmer::add_resource(name = iti_entities$Scheduler, ...)
+  if (missing(.config) || rlang::is_empty(.config))
+    .config <- new_scheduler_config(prepared_args = list(...))
+
+  .env %>% add_iti_resource_entity(.config = .config)
 }
