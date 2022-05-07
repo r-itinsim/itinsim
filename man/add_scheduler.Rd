@@ -4,12 +4,14 @@
 \alias{add_scheduler}
 \title{Add scheduler/load balancer}
 \usage{
-add_scheduler(.env, ...)
+add_scheduler(.env, ..., .config)
 }
 \arguments{
 \item{.env}{Simulation environment with name "IT infrastructure"}
 
 \item{...}{Add resource parameters from simmer}
+
+\item{.config}{scheduler config object which will be used as primary source of parameters for the resource}
 }
 \value{
 Simulation environment with resource named "Scheduler"

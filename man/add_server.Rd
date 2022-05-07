@@ -4,12 +4,14 @@
 \alias{add_server}
 \title{Add server}
 \usage{
-add_server(.env, ...)
+add_server(.env, ..., .config)
 }
 \arguments{
 \item{.env}{simulation environment}
 
 \item{...}{other resource parameters}
+
+\item{.config}{server config object which will be used as primary source of parameters for the resource}
 }
 \description{
 Add server

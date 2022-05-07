@@ -19,6 +19,10 @@ add_iti_entities <- function(.env, .configs)
   gendatypes::validate_typed_list_class(.configs)
 }
 
-add_single_iti_entity.server_config <- add_server
+add_single_iti_entity.server_config <- function(.env, .config) {
+  add_server(.env, .config = .config)
+}
 
-add_single_iti_entity.scheduler_config <- add_scheduler
+add_single_iti_entity.scheduler_config <- function(.env, .config) {
+  add_scheduler(.env, .config = .config)
+}

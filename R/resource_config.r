@@ -53,6 +53,12 @@ validate_resource_config <- function(obj)
   gendatypes::as.typed_list
 }
 
+#' Validate input object is typed list with type 'resource_config'
+#'
+#' @param obj object to validate
+#'
+#' @return validated object
+#' @export
 validate_typed_list_of_resource_configs <- function(obj)
 {
   gendatypes::validate_typed_list_class(obj)

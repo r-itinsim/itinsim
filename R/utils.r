@@ -20,13 +20,13 @@ prepare_args_from_caller <- function(func, args) {
 
 #' S3 method for as.data.frame when 'density' type is provided
 #'
-#' @param .density Density object from stats package
+#' @inheritParams base::as.data.frame
 #'
 #' @return data frame which contains only 'x' and 'y' values from 'density' object
 #' @export
-as.data.frame.density <- function(.density)
+as.data.frame.density <- function(x, row.names, optional, ...)
 {
-  data.frame(y = .density$y, x = .density$x)
+  data.frame(y = x$y, x = x$x)
 }
 
 
@@ -37,6 +37,8 @@ as.data.frame.density <- function(.density)
 #' @param data Provided data.frame
 #' @param column Column name
 #' @param only.value If is equal to TRUE then generator function will always return single value, otherwise it will return pairs of x and y
+#' @importFrom stats runif
+#' @importFrom rlang .data
 #'
 #' @return function which accepts number and returns random value from generated distribution
 #' @export
@@ -46,16 +48,16 @@ get_distribution_function <- function(data, column, only.value = T)
     dplyr::pull({{column}}) %>%
     stats::density(n = nrow(data), bw = 1) %>%
     as.data.frame() %>%
-    dplyr::mutate(relcumsum = cumsum(y)/sum(y)) %>%
-    dplyr::select(x = relcumsum, y = x) %>%
+    dplyr::mutate(relcumsum = cumsum(.data$y)/sum(.data$y)) %>%
+    dplyr::select(x = .data$relcumsum, y = .data$x) %>%
     as.list()
 
   function(n)
   {
     result <- approx_data %>%
-      stats::approx(xout = runif(n), ties = min) %>%
+      stats::approx(xout = stats::runif(n), ties = min) %>%
       as.data.frame() %>%
-      dplyr::mutate(y = ifelse(y < 0 | is.na(y), 0, floor(y)))
+      dplyr::mutate(y = ifelse(.data$y < 0 | is.na(.data$y), 0, floor(.data$y)))
 
     if (only.value) result$y else result
   }
