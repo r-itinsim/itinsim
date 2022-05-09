@@ -4,16 +4,16 @@
 \alias{generate_list_of_named_items}
 \title{Generate list of named items according to passed creation function}
 \usage{
-generate_list_of_named_items(n = 1, name_template, create_function, ...)
+generate_list_of_named_items(x, name_template, create_function, ...)
 }
 \arguments{
-\item{n}{Number of items to create}
-
 \item{name_template}{Name template for sprintf}
 
 \item{create_function}{Function which will be used for create}
 
 \item{...}{Additional parameters required for specific function}
+
+\item{n}{Number of items to create}
 }
 \description{
 Generate list of named items according to passed creation function

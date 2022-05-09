@@ -21,7 +21,7 @@ new_custom_policy <- function(name = character(), resources = character(), env =
 #' Get policy name for custom policy
 #'
 #' In other words, there are 2 iterations of resources selection:
-#' 1. Produce list of resource names. Production logic can incapsulate decision logic.
+#' 1. Produce list of resource names. Production logic can encapsulate decision logic.
 #' 2. Simmer default algorithm selection.
 #'
 #' @param policy policy object

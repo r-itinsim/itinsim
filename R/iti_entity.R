@@ -44,10 +44,12 @@ add_iti_entities <- function(.env, ..., .configs)
     warning("Both dots (...) and .configs arguments are not empty. In such case dots will be ignored.")
 
   if (configs_are_missing)
-    .configs = dots %>% gendatypes::as.typed_list(type_class = class_names.resource_config)
+    .configs = dots
+
+  if (!gendatypes::is_typed_list(.configs))
+    .configs <- gendatypes::as.typed_list(.configs, type_class = class_names.resource_config)
 
   validate_it_infrastructure(.env)
-  gendatypes::validate_typed_list_class(.configs)
   Reduce(add_single_iti_entity, .configs, init = .env)
 }
 

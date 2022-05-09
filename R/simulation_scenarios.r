@@ -10,7 +10,7 @@
 #' @export
 run_scenario <- function(scenario, policies, resource_configs, sim_config)
 {
-  validate_iti_simulation_scenario("iti", "policy")
+  validate_iti_simulation_scenario(scenario, "iti", "policy", "sim_config", "sim_cache")
   wrapped_policies <- policies %>% purrr::modify_if(Negate(is_policy), wrap_policy)
 
   f_opts <- furrr::furrr_options(seed = 73)
@@ -25,7 +25,9 @@ run_scenario <- function(scenario, policies, resource_configs, sim_config)
   {
     p(message = paste("Start simulation for:", policy$name))
     iti <- create_iti()
-    sim_result <- scenario(iti, policy, sim_config)
+    sim_cache <- new_simulation_cache(iti)
+    initialized_policy <- policy_initialize(policy, env = iti, cache = sim_cache)
+    sim_result <- scenario(iti = iti, policy = initialized_policy, sim_config = sim_config, sim_cache = sim_cache)
     p(message = paste("End simulation for:", policy$name))
 
     sim_result$policy <- policy

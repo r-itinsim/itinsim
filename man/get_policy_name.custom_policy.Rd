@@ -15,7 +15,7 @@ policy name with respect to "simmer"
 \description{
 In other words, there are 2 iterations of resources selection:
 \enumerate{
-\item Produce list of resource names. Production logic can incapsulate decision logic.
+\item Produce list of resource names. Production logic can encapsulate decision logic.
 \item Simmer default algorithm selection.
 }
 }

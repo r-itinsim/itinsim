@@ -22,7 +22,7 @@ config.repeat <- function(n = 1, config_type = c("server", "scheduler"), ...)
 #' @export
 config.repeat.server <- function(n = 1, ...)
 {
-  generate_list_of_named_items(n, name_template = "Server-%s", create_function = new_server_config)
+  generate_list_of_named_items(n, name_template = "Server%s", create_function = new_server_config)
 }
 
 #' Repeat function handler for scheduler_config
@@ -34,7 +34,7 @@ config.repeat.server <- function(n = 1, ...)
 #' @export
 config.repeat.scheduler <- function(n = 1, ...)
 {
-  generate_list_of_named_items(n, name_template = "Scheduler-%s", create_function = new_scheduler_config)
+  generate_list_of_named_items(n, name_template = "Scheduler%s", create_function = new_scheduler_config)
 }
 
 #' Generate list of named items according to passed creation function
@@ -45,49 +45,49 @@ config.repeat.scheduler <- function(n = 1, ...)
 #' @param ... Additional parameters required for specific function
 #'
 #' @keywords internal
-generate_list_of_named_items <- function(n = 1, name_template, create_function, ...)
+generate_list_of_named_items <- function(x, name_template, create_function, ...)
 {
-  sprintf(name_template, 1:n) %>%
+  UseMethod("generate_list_of_named_items", x)
+}
+
+#' Generate list of objects with name parameter based on creation function
+#' @description All arguments with 'name' argument will be passed to creation function as 'prepared_args' list argument
+#'
+#' @param x input vector for names generation
+#' @param name_template template for sprintf with %s replace character
+#' @param create_function creation function
+#' @param ... additional arguments
+#'
+#' @return list of object
+#' @export
+generate_list_of_named_items.numeric <- function(x, name_template, create_function, ...)
+{
+  if (isTRUE(x == 1)) x <- ""
+  else if (length(x) == 1) x <- paste0("-", 1:x)
+  else x <- paste0("-", x)
+  NextMethod()
+}
+
+#' S3 method for character overload of generate_list_of_named_items function
+#'
+#' @keywords internal
+generate_list_of_named_items.character <- function(x, name_template, create_function, ...)
+{
+  x <- paste0("-", x)
+  NextMethod()
+}
+
+#' S3 method for default overload of generate_list_of_named_items function
+#'
+#' @keywords.internal
+generate_list_of_named_items.default <- function(x, name_template, create_function, ...)
+{
+  result <- sprintf(name_template, x)
+  result %>%
     lapply(function(name)
     {
       args <- list(...)
       args$name <- name
       do.call(create_function, list(prepared_args = args))
-    })
-}
-
-#' Generate many configs with the same properties
-#'
-#' @param n Number of copies
-#' @param ... Properties
-#'
-#' @return list of generated configs
-#' @export
-generate.server_config <- function(n = 1, ...)
-{
-  sprintf("Server-%s", 1:n) %>%
-    lapply(function(server_name)
-    {
-      args <- list(...)
-      args$name <- server_name
-      new_server_config(prepared_args = args)
-    })
-}
-
-#' Generate many scheduler configs with the same properties
-#'
-#' @param n Number of copies
-#' @param ... Properties
-#'
-#' @return list of generated configs
-#' @export
-generate.scheduler_config <- function(n = 1, ...)
-{
-  sprintf("Scheduler-%s", 1:n) %>%
-    lapply(function(scheduler_name)
-    {
-      args <- list(...)
-      args$name <- scheduler_name
-      new_scheduler_config(prepared_args = args)
     })
 }
