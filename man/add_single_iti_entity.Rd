@@ -18,7 +18,7 @@ add_single_iti_entity(.env, .config)
 \item{.config}{config object}
 }
 \value{
-
+IT infrastucture with added entity
 }
 \description{
 Add single IT infrastructure entity based on provided config

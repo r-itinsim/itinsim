@@ -19,7 +19,8 @@ add_iti_resource_entity <- function(.env, .config)
 #' @param .env IT infrastructure environment
 #' @param .config config object
 #'
-#' @return
+#' @return IT infrastucture with added entity
+#' @export
 add_single_iti_entity <- function(.env, .config)
 {
   validate_resource_config(.config)
