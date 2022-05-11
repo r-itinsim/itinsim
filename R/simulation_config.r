@@ -9,7 +9,13 @@
 new_simulation_config <- function(tasks = numeric(), until = double(), units = "seconds") {
   stopifnot(is.numeric(tasks))
 
-  if (!rlang::is_empty(tasks) & rlang::is_empty(until))
+  is_tasks_empty <- rlang::is_empty(tasks)
+  is_until_empty <- rlang::is_empty(until)
+
+  if (is_tasks_empty && is_until_empty)
+    stop("At least one argument either 'tasks' or 'until' must be provided!")
+
+  if (!is_tasks_empty & is_until_empty)
     until <- Inf
 
   until_duration <- as.numeric(lubridate::duration(until, units = units))
